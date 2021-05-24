@@ -1,0 +1,17 @@
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+<!--        下面这个的写法的坏处是，如果你的urls.py文件有更改的地方, 那么这里的/polls/也要做响应的修改，就不优雅-->
+<!--        <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>-->
+<!--        ==================================================================================-->
+<!--        因为urls.py里面定义了 app_name='pools', 所以这里原来的'detail' 要改成'polls:detail'这样就能知道是哪个detail了-->
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
